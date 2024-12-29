@@ -8,6 +8,9 @@ import torch
 import numpy as np
 import os
 
+# вариант где все происходит на одном устройстве
+
+
 # Инициализация модели
 print("Загрузка модели Whisper...")
 device = "cuda" if torch.cuda.is_available() else "cpu"
