@@ -77,4 +77,17 @@ async def transcribe_audio(file: UploadFile = File(...)):
         return {"error": str(e)}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8007) 
+    # Загружаем модель только один раз при запуске
+    print("Загрузка модели Whisper...")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    processor = AutoProcessor.from_pretrained("openai/whisper-large-v3-turbo")
+    model = AutoModelForSpeechSeq2Seq.from_pretrained("openai/whisper-large-v3-turbo").to(device)
+    print(f"Модель загружена! Используется: {device.upper()}")
+    
+    # Запускаем сервер
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=8007,
+        workers=1  # Для работы с GPU лучше использовать один воркер
+    ) 
