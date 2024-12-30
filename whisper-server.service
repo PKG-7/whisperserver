@@ -1,0 +1,27 @@
+[Unit]
+Description=Whisper Speech-to-Text Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=pkgpu
+WorkingDirectory=/home/pkgpu/whisperserver
+Environment="PATH=/home/pkgpu/whisperserver/venv/bin"
+ExecStart=/home/pkgpu/whisperserver/venv/bin/python main.py
+Restart=always
+RestartSec=10
+TimeoutStartSec=300
+TimeoutStopSec=30
+
+# Ограничения ресурсов
+MemoryLimit=16G
+CPUQuota=200%
+
+# Настройки безопасности
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target 
