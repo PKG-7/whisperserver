@@ -34,7 +34,10 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 3. Устанавливаем systemd сервис
+# 3. Запускаем сервер напрямую
+python main.py
+
+# или Устанавливаем systemd сервис не работает сейчас
 sudo cp whisper-server.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable whisper-server
